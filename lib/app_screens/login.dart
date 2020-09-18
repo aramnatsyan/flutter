@@ -168,14 +168,14 @@ class LoginPageState extends State<Login> {
           _emailError = _loginErrors['Email'].toString();
           _emailError = _emailError.replaceAll('[', '');
           _emailError = _emailError.replaceAll(']', '');
-          _emailError = _emailError + ' !';
+          _emailError = _emailError + ' ! ';
         }
 
         if (_loginErrors.containsKey('Password')) {
           _passError = _loginErrors['Password'].toString();
           _passError = _passError.replaceAll('[', '');
           _passError = _passError.replaceAll(']', '');
-          _passError = _passError + ' !';
+          _passError = _passError + ' ! ';
         }
       });
       Future<void> _showMyDialog() async {
