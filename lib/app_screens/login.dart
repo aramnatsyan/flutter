@@ -260,7 +260,9 @@ class LoginPageState extends State<Login> {
     */
     final appVersion = resource[0]['resourceVersion'];
 
-    /*check local version and app version  and set resources*/
+    /*
+    check local version and app version  and set resources
+    */
     if (appLocalVersion != appVersion) {
       prefs.setString('_app_local_version', appVersion);
       loginPageresources.forEach((key, value) {
