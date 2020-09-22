@@ -17,6 +17,7 @@ class LoginPageState extends State<Login> {
   bool _isLoading = false;
   // page resources texts
   Map loginPageresources;
+  Map profilePageresources;
   String logoUlr = '';
   String emailInputtext = '';
   String passwordInputText = '';
@@ -248,6 +249,9 @@ class LoginPageState extends State<Login> {
     loginPageresources =
         jsonDecode(resource[0]['translations'][0]['resourceJson'])['auth'];
 
+    profilePageresources =
+        jsonDecode(resource[0]['translations'][0]['resourceJson'])['profile'];
+
     /* 
     get app local Version
     */
@@ -265,7 +269,16 @@ class LoginPageState extends State<Login> {
     */
     if (appLocalVersion != appVersion) {
       prefs.setString('_app_local_version', appVersion);
+      /*
+      save login page sesources
+      */
       loginPageresources.forEach((key, value) {
+        setAppLocalVersion(key, value);
+      });
+      /*
+      save profile page sesources
+      */
+      profilePageresources.forEach((key, value) {
         setAppLocalVersion(key, value);
       });
     }

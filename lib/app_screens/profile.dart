@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'user_page_header_footer/user_profile_header.dart';
 import 'navigation/profile_bottom_navigation_bar.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:flutter/services.dart';
 
 // ignore: must_be_immutable
@@ -16,7 +17,19 @@ class UserProfile extends StatefulWidget {
 
 class UserProfileState extends State<UserProfile> {
   Map userData;
+  /* 
+  profile rources
+  */
+  String payTypes = '';
+  String emailInputtext = '';
+
   UserProfileState(this.userData);
+
+  @override
+  void initState() {
+    getProfileResources();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,12 +53,12 @@ class UserProfileState extends State<UserProfile> {
               child: SizedBox(
                 width: MediaQuery.of(context).size.width,
                 child: Text(
-                  'Способы оплаты',
+                  payTypes,
                   style: TextStyle(fontSize: 18.0, height: 3.0),
                 ),
               ),
               onPressed: () {
-                print('Способы оплаты');
+                print(payTypes);
               },
             ),
           ),
@@ -191,5 +204,10 @@ class UserProfileState extends State<UserProfile> {
       ),
       bottomNavigationBar: ProfileBottomNavigation(),
     );
+  }
+
+  getProfileResources() async {
+    final prefs = await SharedPreferences.getInstance();
+    payTypes = prefs.getString('pay_types') ?? '';
   }
 }
