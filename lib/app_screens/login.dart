@@ -23,7 +23,7 @@ class LoginPageState extends State<Login> {
   String forgotPasswordButtonText = '';
   String loginButtonText = '';
   String registerButtonText = '';
-  /* .... */
+  //....
   String _emailError = '';
   String _passError = '';
   Map _loginErrors;

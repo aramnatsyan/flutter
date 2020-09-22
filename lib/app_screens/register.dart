@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'registerVerifyCode.dart';
 import 'login.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Register extends StatefulWidget {
   @override
@@ -12,6 +13,22 @@ class Register extends StatefulWidget {
 
 class RegisterPageState extends State<Register> {
   bool _isLoading = false;
+
+  /*
+  Register page resources
+  */
+  Map loginPageresources;
+  String logoUlr = '';
+  String emailInputtext = '';
+  String passwordInputText = '';
+  String confirmPassword = '';
+  String nextButtonText = '';
+
+  @override
+  void initState() {
+    getRegisterPageResources();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +69,7 @@ class RegisterPageState extends State<Register> {
                             width: 380,
                             child: TextFormField(
                               decoration: InputDecoration(
-                                hintText: 'Email',
+                                hintText: emailInputtext,
                               ),
                               keyboardType: TextInputType.number,
                               controller: phoneController,
@@ -62,7 +79,8 @@ class RegisterPageState extends State<Register> {
                             width: 380,
                             margin: EdgeInsets.only(top: 10.0),
                             child: TextFormField(
-                              decoration: InputDecoration(hintText: 'Пароль'),
+                              decoration:
+                                  InputDecoration(hintText: passwordInputText),
                               keyboardType: TextInputType.text,
                               obscureText: true,
                               controller: passwordController,
@@ -72,8 +90,8 @@ class RegisterPageState extends State<Register> {
                             width: 380,
                             margin: EdgeInsets.only(top: 10.0),
                             child: TextFormField(
-                              decoration: InputDecoration(
-                                  hintText: 'Подтвердите Пароль'),
+                              decoration:
+                                  InputDecoration(hintText: confirmPassword),
                               keyboardType: TextInputType.text,
                               obscureText: true,
                               controller: reEnteredPasswordController,
@@ -82,11 +100,9 @@ class RegisterPageState extends State<Register> {
                           Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(500.0),
-                              // color: Colors.yellow[600],
                             ),
                             alignment: Alignment.center,
                             margin: EdgeInsets.only(top: 60.0),
-                            // width: 300,
                             height: 40,
                             child: RaisedButton(
                               color: Colors.yellow[600],
@@ -104,7 +120,7 @@ class RegisterPageState extends State<Register> {
                                 );
                               },
                               child: Text(
-                                'Далее ',
+                                nextButtonText,
                               ),
                             ),
                           ),
@@ -124,6 +140,8 @@ class RegisterPageState extends State<Register> {
       new TextEditingController();
 
   register(String phone, pass, reEnteredPass) async {
+    bool somethingIsWrong = false;
+    String errorMassage = '';
     if (pass != '' && reEnteredPass != '' && phone != '') {
       if (pass == reEnteredPass) {
         String url = "https://192.168.88.61:5201/api/mobile/Account/register";
@@ -148,7 +166,6 @@ class RegisterPageState extends State<Register> {
 
         if (response.statusCode == 200) {
           setState(() {
-            _isLoading = false;
             Navigator.of(context).pushAndRemoveUntil(
                 MaterialPageRoute(
                   builder: (BuildContext context) => RegisterVeryfingCode(
@@ -160,21 +177,68 @@ class RegisterPageState extends State<Register> {
         } else {
           setState(() {
             _isLoading = false;
+            somethingIsWrong = true;
+            errorMassage = 'Something is Wrong with Server';
           });
-          print('error');
-          // final errorExeption = 'error';
         }
       } else {
         setState(() {
           _isLoading = false;
+          somethingIsWrong = true;
+          errorMassage = 'Passwords are not same !';
         });
-        print('Passwords are not same');
       }
     } else {
       setState(() {
         _isLoading = false;
+        somethingIsWrong = true;
+        errorMassage = 'All fields are required !';
       });
-      print('empty');
     }
+
+    if (somethingIsWrong == true) {
+      Future<void> _showMyDialog() async {
+        return showDialog<void>(
+          context: context,
+          barrierDismissible: false, // user must tap button!
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('Ooops'),
+              content: SingleChildScrollView(
+                child: ListBody(
+                  children: <Widget>[
+                    Text(errorMassage),
+                  ],
+                ),
+              ),
+              actions: <Widget>[
+                FlatButton(
+                  child: Text('OK'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          },
+        );
+      }
+
+      _showMyDialog();
+    }
+  }
+
+  /* 
+  get login page resources from local storage  and rebuild build method 
+  */
+  getRegisterPageResources() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      //logoUlr = loginPageresources['email'];
+      emailInputtext = prefs.getString('email') ?? '';
+      passwordInputText = prefs.getString('password') ?? '';
+      confirmPassword = prefs.getString('password_confirmation') ?? '';
+      nextButtonText = prefs.getString('next') ?? '';
+    });
   }
 }
