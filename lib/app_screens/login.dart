@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'dart:io';
 import 'dart:convert';
 import 'package:flutter/material.dart';
@@ -5,6 +6,7 @@ import 'package:link/link.dart';
 import 'package:flutter/services.dart';
 import 'profile.dart';
 import 'register.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -13,9 +15,24 @@ class Login extends StatefulWidget {
 
 class LoginPageState extends State<Login> {
   bool _isLoading = false;
+  // page resources texts
+  Map loginPageresources;
+  String logoUlr = '';
+  String emailInputtext = '';
+  String passwordInputText = '';
+  String forgotPasswordButtonText = '';
+  String loginButtonText = '';
+  String registerButtonText = '';
+  //....
   String _emailError = '';
   String _passError = '';
   Map _loginErrors;
+
+  @override
+  void initState() {
+    checkVersion();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +62,7 @@ class LoginPageState extends State<Login> {
                             width: 380,
                             child: TextFormField(
                               decoration: InputDecoration(
-                                hintText: 'Email',
+                                hintText: emailInputtext,
                               ),
                               keyboardType: TextInputType.number,
                               controller: phoneController,
@@ -54,7 +71,8 @@ class LoginPageState extends State<Login> {
                           Container(
                             width: 380,
                             child: TextFormField(
-                              decoration: InputDecoration(hintText: 'Пароль'),
+                              decoration:
+                                  InputDecoration(hintText: passwordInputText),
                               keyboardType: TextInputType.text,
                               obscureText: true,
                               controller: passwordController,
@@ -65,7 +83,7 @@ class LoginPageState extends State<Login> {
                               margin: EdgeInsets.only(top: 10.0),
                               width: 380,
                               child: Link(
-                                child: Text('Забыли пароль?'),
+                                child: Text(forgotPasswordButtonText),
                                 url: 'https://www.google.com',
                               )),
                           Container(
@@ -90,14 +108,13 @@ class LoginPageState extends State<Login> {
                                     passwordController.text);
                               },
                               child: Text(
-                                'Войти',
+                                loginButtonText,
                               ),
                             ),
                           ),
                           Container(
                             alignment: Alignment.center,
                             margin: EdgeInsets.only(top: 60.0),
-                            // width: 300,
                             height: 40,
                             child: RaisedButton(
                               color: Colors.white,
@@ -109,7 +126,7 @@ class LoginPageState extends State<Login> {
                                     (Route<dynamic> route) => false);
                               },
                               child: Text(
-                                'ЗАРЕГИСТРИРОВАТЬСЯ',
+                                registerButtonText,
                               ),
                             ),
                           ),
@@ -208,5 +225,68 @@ class LoginPageState extends State<Login> {
 
       _showMyDialog();
     }
+  }
+
+  void checkVersion() async {
+    //get app version
+    String url = "https://192.168.88.61:5201/api/Localizations/GetResources";
+
+    HttpClient client = new HttpClient();
+    client.badCertificateCallback =
+        ((X509Certificate cert, String host, int port) => true);
+
+    HttpClientRequest request = await client.getUrl(Uri.parse(url));
+
+    request.headers.set('content-type', 'application/json');
+
+    HttpClientResponse response = await request.close();
+
+    String reply = await response.transform(utf8.decoder).join();
+
+    final resource = jsonDecode(reply) as List;
+
+    loginPageresources =
+        jsonDecode(resource[0]['translations'][0]['resourceJson'])['auth'];
+
+    /* 
+    get app local Version
+     */
+    final prefs = await SharedPreferences.getInstance();
+    final key = '_app_local_version';
+    final appLocalVersion = prefs.getString(key) ?? 0;
+
+    /*
+     get app current live version
+      */
+    final appVersion = resource[0]['resourceVersion'];
+
+    /*
+    check local version and app version  and set resources
+    */
+    if (appLocalVersion != appVersion) {
+      prefs.setString('_app_local_version', appVersion);
+      loginPageresources.forEach((key, value) {
+        setAppLocalVersion(key, value);
+      });
+    }
+
+    /* 
+    get login page resources from local storage  and rebuild build method
+     */
+    setState(() {
+      //logoUlr = loginPageresources['email'];
+      emailInputtext = prefs.getString('email') ?? '';
+      passwordInputText = prefs.getString('password') ?? '';
+      forgotPasswordButtonText = prefs.getString('forgot') ?? '';
+      loginButtonText = prefs.getString('login') ?? '';
+      registerButtonText = prefs.getString('register') ?? '';
+    });
+  }
+
+  setAppLocalVersion(keyName, valueName) async {
+    final prefs = await SharedPreferences.getInstance();
+    final key = keyName;
+    final value = valueName;
+    prefs.setString(key, value);
   }
 }
