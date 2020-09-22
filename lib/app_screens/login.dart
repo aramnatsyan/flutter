@@ -251,6 +251,7 @@ class LoginPageState extends State<Login> {
     /* 
     get app local Version
      */
+
     final prefs = await SharedPreferences.getInstance();
     final key = '_app_local_version';
     final appLocalVersion = prefs.getString(key) ?? 0;
@@ -263,6 +264,8 @@ class LoginPageState extends State<Login> {
     /*
     check local version and app version  and set resources
     */
+
+    /*check local version and app version  and set resources*/
     if (appLocalVersion != appVersion) {
       prefs.setString('_app_local_version', appVersion);
       loginPageresources.forEach((key, value) {
@@ -270,9 +273,7 @@ class LoginPageState extends State<Login> {
       });
     }
 
-    /* 
-    get login page resources from local storage  and rebuild build method
-     */
+    /* get login page resources from local storage  and rebuild build method */
     setState(() {
       //logoUlr = loginPageresources['email'];
       emailInputtext = prefs.getString('email') ?? '';
