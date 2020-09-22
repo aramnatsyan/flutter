@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'dart:io';
 import 'dart:convert';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: must_be_immutable
 class RegisterVeryfingCode extends StatefulWidget {
@@ -19,8 +20,16 @@ class RegisterVeryfingCode extends StatefulWidget {
 class _RegisterVeryfingCodeState extends State<RegisterVeryfingCode> {
   bool _isLoading = false;
   String userEmail;
+  String verificationCodeInputText = '';
+  String registrationButtonText = '';
 
   _RegisterVeryfingCodeState(this.userEmail);
+
+  @override
+  void initState() {
+    getPageRecources();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +71,7 @@ class _RegisterVeryfingCodeState extends State<RegisterVeryfingCode> {
                             width: 380,
                             child: TextFormField(
                               decoration: InputDecoration(
-                                hintText: 'Ваш код подтверждения',
+                                hintText: verificationCodeInputText,
                               ),
                               keyboardType: TextInputType.number,
                               controller: veryfingCodeController,
@@ -89,7 +98,7 @@ class _RegisterVeryfingCodeState extends State<RegisterVeryfingCode> {
                                 veryfingCode(veryfingCodeController.text);
                               },
                               child: Text(
-                                'ЗАРЕГИСТРИРОВАТЬСЯ',
+                                registrationButtonText,
                               ),
                             ),
                           ),
@@ -148,5 +157,17 @@ class _RegisterVeryfingCodeState extends State<RegisterVeryfingCode> {
         _isLoading = false;
       });
     }
+  }
+
+  /* 
+  get verification code page resources from local storage  and rebuild build method 
+  */
+  getPageRecources() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      //logoUlr = loginPageresources['email'];
+      verificationCodeInputText = prefs.getString('enter_code') ?? '';
+      registrationButtonText = prefs.getString('register') ?? '';
+    });
   }
 }

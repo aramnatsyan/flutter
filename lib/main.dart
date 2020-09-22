@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'app_screens/login.dart';
+import 'app_screens/registerVerifyCode.dart';
 
 void main() => runApp(MyApp());
 
