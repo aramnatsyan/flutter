@@ -287,7 +287,6 @@ class LoginPageState extends State<Login> {
     get login page resources from local storage  and rebuild build method 
     */
     setState(() {
-      //logoUlr = loginPageresources['email'];
       emailInputtext = prefs.getString('email') ?? '';
       passwordInputText = prefs.getString('password') ?? '';
       forgotPasswordButtonText = prefs.getString('forgot') ?? '';

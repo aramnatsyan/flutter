@@ -17,13 +17,18 @@ class UserProfile extends StatefulWidget {
 
 class UserProfileState extends State<UserProfile> {
   Map userData;
+  UserProfileState(this.userData);
   /* 
-  profile rources
+  profile texts rources
   */
   String payTypes = '';
+  String raiting = '';
   String emailInputtext = '';
-
-  UserProfileState(this.userData);
+  String settings = '';
+  String inviteFriend = '';
+  String aboutService = '';
+  String support = '';
+  String weInSocialmedia = '';
 
   @override
   void initState() {
@@ -34,13 +39,14 @@ class UserProfileState extends State<UserProfile> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      body: ListView(
+      body: Stack(
         children: <Widget>[
-          ProfileHeader(
-            userData: userData,
-          ),
+          // ProfileHeader(
+          //   userData: userData,
+          // ),
           Container(
-            margin: const EdgeInsets.only(left: 10.0, right: 10.0),
+            margin: const EdgeInsets.only(left: 10.0, right: 10.0, top: 275.0),
+            padding: EdgeInsets.only(top: 10),
             decoration: BoxDecoration(
               border: Border(
                 bottom: BorderSide(
@@ -63,7 +69,8 @@ class UserProfileState extends State<UserProfile> {
             ),
           ),
           Container(
-            margin: const EdgeInsets.only(left: 10.0, right: 10.0),
+            margin: const EdgeInsets.only(left: 10.0, right: 10.0, top: 355),
+            padding: EdgeInsets.only(top: 10),
             decoration: BoxDecoration(
               border: Border(
                 bottom: BorderSide(
@@ -76,17 +83,17 @@ class UserProfileState extends State<UserProfile> {
               child: SizedBox(
                 width: MediaQuery.of(context).size.width,
                 child: Text(
-                  'Рейтинг',
+                  raiting,
                   style: TextStyle(fontSize: 18.0, height: 3.0),
                 ),
               ),
               onPressed: () {
-                print('Рейтинг');
+                print(raiting);
               },
             ),
           ),
           Container(
-            margin: const EdgeInsets.only(left: 10.0, right: 10.0),
+            margin: const EdgeInsets.only(left: 10.0, right: 10.0, top: 415.0),
             decoration: BoxDecoration(
               border: Border(
                 bottom: BorderSide(
@@ -99,17 +106,17 @@ class UserProfileState extends State<UserProfile> {
               child: SizedBox(
                 width: MediaQuery.of(context).size.width,
                 child: Text(
-                  'Настройки',
+                  settings,
                   style: TextStyle(fontSize: 18.0, height: 3.0),
                 ),
               ),
               onPressed: () {
-                print('Настройки');
+                print(settings);
               },
             ),
           ),
           Container(
-            margin: const EdgeInsets.only(left: 10.0, right: 10.0),
+            margin: const EdgeInsets.only(left: 10.0, right: 10.0, top: 465),
             decoration: BoxDecoration(
               border: Border(
                 bottom: BorderSide(
@@ -122,17 +129,17 @@ class UserProfileState extends State<UserProfile> {
               child: SizedBox(
                 width: MediaQuery.of(context).size.width,
                 child: Text(
-                  'Пригласить друга',
+                  inviteFriend,
                   style: TextStyle(fontSize: 18.0, height: 3.0),
                 ),
               ),
               onPressed: () {
-                print('Пригласить друга');
+                print(inviteFriend);
               },
             ),
           ),
           Container(
-            margin: const EdgeInsets.only(left: 10.0, right: 10.0),
+            margin: const EdgeInsets.only(left: 10.0, right: 10.0, top: 515),
             decoration: BoxDecoration(
               border: Border(
                 bottom: BorderSide(
@@ -145,17 +152,17 @@ class UserProfileState extends State<UserProfile> {
               child: SizedBox(
                 width: MediaQuery.of(context).size.width,
                 child: Text(
-                  'О сервисе',
+                  aboutService,
                   style: TextStyle(fontSize: 18.0, height: 3.0),
                 ),
               ),
               onPressed: () {
-                print('О сервисе');
+                print(aboutService);
               },
             ),
           ),
           Container(
-            margin: const EdgeInsets.only(left: 10.0, right: 10.0),
+            margin: const EdgeInsets.only(left: 10.0, right: 10.0, top: 565),
             decoration: BoxDecoration(
               border: Border(
                 bottom: BorderSide(
@@ -168,17 +175,17 @@ class UserProfileState extends State<UserProfile> {
               child: SizedBox(
                 width: MediaQuery.of(context).size.width,
                 child: Text(
-                  'Служба поддержки',
+                  support,
                   style: TextStyle(fontSize: 18.0, height: 3.0),
                 ),
               ),
               onPressed: () {
-                print('Служба поддержки');
+                print(support);
               },
             ),
           ),
           Container(
-            margin: const EdgeInsets.only(left: 10.0, right: 10.0),
+            margin: const EdgeInsets.only(left: 10.0, right: 10.0, top: 615),
             decoration: BoxDecoration(
               border: Border(
                 bottom: BorderSide(
@@ -191,14 +198,17 @@ class UserProfileState extends State<UserProfile> {
               child: SizedBox(
                 width: MediaQuery.of(context).size.width,
                 child: Text(
-                  'Мы в соцсетях',
+                  weInSocialmedia,
                   style: TextStyle(fontSize: 18.0, height: 3.0),
                 ),
               ),
               onPressed: () {
-                print('Мы в соцсетях');
+                print(weInSocialmedia);
               },
             ),
+          ),
+          ProfileHeader(
+            userData: userData,
           ),
         ],
       ),
@@ -206,8 +216,23 @@ class UserProfileState extends State<UserProfile> {
     );
   }
 
+  /*
+  get profile page resources from store for simple data.
+  */
   getProfileResources() async {
     final prefs = await SharedPreferences.getInstance();
-    payTypes = prefs.getString('pay_types') ?? '';
+
+    /*
+    rebuild profile widget with new variables
+    */
+    setState(() {
+      payTypes = prefs.getString('pay_types') ?? '';
+      raiting = prefs.getString('raiting') ?? '';
+      settings = prefs.getString('settings') ?? '';
+      inviteFriend = prefs.getString('invite') ?? '';
+      aboutService = prefs.getString('about') ?? '';
+      support = prefs.getString('support') ?? '';
+      weInSocialmedia = prefs.getString('socials') ?? '';
+    });
   }
 }
