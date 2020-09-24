@@ -12,7 +12,7 @@ class ProfileHeader extends StatefulWidget {
 class ProfileHeaderState extends State<ProfileHeader> {
   Map userData;
   bool _isHeaderOppened = false;
-  double _heights = 270;
+  double _heights = 300;
   bool _isVisible = false;
   ProfileHeaderState(this.userData);
   /*
@@ -34,13 +34,12 @@ class ProfileHeaderState extends State<ProfileHeader> {
   Widget build(BuildContext context) {
     return Stack(
       children: <Widget>[
-        // Positioned(
         GestureDetector(
           onTap: () {
             if (_isHeaderOppened) {
               _isHeaderOppened = false;
               setState(() {
-                _heights = 270;
+                _heights = 300;
                 _isVisible = false;
               });
             } else {
@@ -60,7 +59,7 @@ class ProfileHeaderState extends State<ProfileHeader> {
                   color: Colors.black,
                   blurRadius: 2.0,
                   spreadRadius: 1.0,
-                )
+                ),
               ],
               color: Colors.black,
               borderRadius: new BorderRadius.only(
@@ -74,6 +73,7 @@ class ProfileHeaderState extends State<ProfileHeader> {
                 Container(
                   height: 110,
                   width: 110,
+                  margin: EdgeInsets.only(bottom: 20),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(100),
                     image: DecorationImage(
@@ -157,7 +157,7 @@ class ProfileHeaderState extends State<ProfileHeader> {
                 ),
                 Visibility(
                   visible: _isVisible,
-                  child: Stack(
+                  child: Column(
                     children: <Widget>[
                       Container(
                         margin: EdgeInsets.symmetric(horizontal: 32),
@@ -189,69 +189,69 @@ class ProfileHeaderState extends State<ProfileHeader> {
                           ],
                         ),
                       ),
-                      Container(
-                        margin:
-                            EdgeInsets.symmetric(vertical: 32, horizontal: 32),
-                        padding: EdgeInsets.only(top: 15),
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.mail,
-                              color: Colors.yellow,
-                              size: 20.0,
-                            ),
-                            Text(' '),
-                            Container(
-                              margin: const EdgeInsets.all(15.0),
-                              padding: const EdgeInsets.all(3.0),
-                              decoration: BoxDecoration(
-                                border: Border(
-                                  bottom: BorderSide(
-                                    width: 1.0,
-                                    color: Colors.grey,
-                                  ),
-                                ),
-                              ),
-                              child: Text(
-                                userData['email'],
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        margin:
-                            EdgeInsets.symmetric(vertical: 62, horizontal: 32),
-                        padding: EdgeInsets.only(top: 15),
-                        child: Row(
-                          children: [
-                            Text(
-                              dateOfBirth + ':',
-                              style: TextStyle(
-                                color: Colors.yellow,
-                              ),
-                            ),
-                            Text(' '),
-                            Container(
-                              margin: const EdgeInsets.all(15.0),
-                              padding: const EdgeInsets.all(3.0),
-                              decoration: BoxDecoration(
-                                border: Border(
-                                  bottom: BorderSide(
-                                    width: 1.0,
-                                    color: Colors.grey,
-                                  ),
-                                ),
-                              ),
-                              child: Text(
-                                userData['birthDate'],
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                      // Container(
+                      //   margin:
+                      //       EdgeInsets.symmetric(vertical: 32, horizontal: 32),
+                      //   padding: EdgeInsets.only(top: 15),
+                      //   child: Row(
+                      //     children: [
+                      //       Icon(
+                      //         Icons.mail,
+                      //         color: Colors.yellow,
+                      //         size: 20.0,
+                      //       ),
+                      //       Text(' '),
+                      //       Container(
+                      //         margin: const EdgeInsets.all(15.0),
+                      //         padding: const EdgeInsets.all(3.0),
+                      //         decoration: BoxDecoration(
+                      //           border: Border(
+                      //             bottom: BorderSide(
+                      //               width: 1.0,
+                      //               color: Colors.grey,
+                      //             ),
+                      //           ),
+                      //         ),
+                      //         child: Text(
+                      //           userData['email'],
+                      //           style: TextStyle(color: Colors.white),
+                      //         ),
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
+                      // Container(
+                      //   margin:
+                      //       EdgeInsets.symmetric(vertical: 62, horizontal: 32),
+                      //   padding: EdgeInsets.only(top: 15),
+                      //   child: Row(
+                      //     children: [
+                      //       Text(
+                      //         dateOfBirth + ':',
+                      //         style: TextStyle(
+                      //           color: Colors.yellow,
+                      //         ),
+                      //       ),
+                      //       Text(' '),
+                      //       Container(
+                      //         margin: const EdgeInsets.all(15.0),
+                      //         padding: const EdgeInsets.all(3.0),
+                      //         decoration: BoxDecoration(
+                      //           border: Border(
+                      //             bottom: BorderSide(
+                      //               width: 1.0,
+                      //               color: Colors.grey,
+                      //             ),
+                      //           ),
+                      //         ),
+                      //         child: Text(
+                      //           userData['birthDate'],
+                      //           style: TextStyle(color: Colors.white),
+                      //         ),
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),

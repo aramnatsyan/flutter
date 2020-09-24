@@ -69,7 +69,7 @@ class UserProfileState extends State<UserProfile> {
             ),
           ),
           Container(
-            margin: const EdgeInsets.only(left: 10.0, right: 10.0, top: 355),
+            margin: const EdgeInsets.only(left: 10.0, right: 10.0, top: 315),
             padding: EdgeInsets.only(top: 10),
             decoration: BoxDecoration(
               border: Border(
@@ -93,7 +93,7 @@ class UserProfileState extends State<UserProfile> {
             ),
           ),
           Container(
-            margin: const EdgeInsets.only(left: 10.0, right: 10.0, top: 415.0),
+            margin: const EdgeInsets.only(left: 10.0, right: 10.0, top: 365.0),
             decoration: BoxDecoration(
               border: Border(
                 bottom: BorderSide(
@@ -116,7 +116,7 @@ class UserProfileState extends State<UserProfile> {
             ),
           ),
           Container(
-            margin: const EdgeInsets.only(left: 10.0, right: 10.0, top: 465),
+            margin: const EdgeInsets.only(left: 10.0, right: 10.0, top: 45),
             decoration: BoxDecoration(
               border: Border(
                 bottom: BorderSide(
@@ -227,7 +227,7 @@ class UserProfileState extends State<UserProfile> {
     */
     setState(() {
       payTypes = prefs.getString('pay_types') ?? '';
-      raiting = prefs.getString('raiting') ?? '';
+      raiting = prefs.getString('rating') ?? '';
       settings = prefs.getString('settings') ?? '';
       inviteFriend = prefs.getString('invite') ?? '';
       aboutService = prefs.getString('about') ?? '';
