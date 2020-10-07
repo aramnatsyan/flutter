@@ -10,7 +10,6 @@ class ProfileHeader extends StatefulWidget {
 }
 
 class ProfileHeaderState extends State<ProfileHeader> {
-  String str;
   Map userData;
   bool _isHeaderOppened = false;
   double _heights = 300;
