@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: must_be_immutable
@@ -10,7 +11,6 @@ class ProfileHeader extends StatefulWidget {
 }
 
 class ProfileHeaderState extends State<ProfileHeader> {
-  String str;
   Map userData;
   bool _isHeaderOppened = false;
   double _heights = 300;
