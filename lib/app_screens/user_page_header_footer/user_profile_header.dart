@@ -1,3 +1,4 @@
+import 'package:delse/app_screens/login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -13,7 +14,7 @@ class ProfileHeader extends StatefulWidget {
 class ProfileHeaderState extends State<ProfileHeader> {
   Map userData;
   bool _isHeaderOppened = false;
-  double _heights = 300;
+  double _heights = 290;
   bool _isVisible = false;
   ProfileHeaderState(this.userData);
   /*
@@ -22,6 +23,7 @@ class ProfileHeaderState extends State<ProfileHeader> {
   String customerRating = '';
   String transporterRating = '';
   String dateOfBirth = '';
+  String logout = '';
   /*
   get profile header resources from store for simple data.
   */
@@ -33,6 +35,7 @@ class ProfileHeaderState extends State<ProfileHeader> {
 
   @override
   Widget build(BuildContext context) {
+    var baseline = CrossAxisAlignment.baseline;
     return Stack(
       children: <Widget>[
         GestureDetector(
@@ -40,13 +43,13 @@ class ProfileHeaderState extends State<ProfileHeader> {
             if (_isHeaderOppened) {
               _isHeaderOppened = false;
               setState(() {
-                _heights = 300;
+                _heights = 294;
                 _isVisible = false;
               });
             } else {
               _isHeaderOppened = true;
               setState(() {
-                _heights = 450;
+                _heights = 440;
                 _isVisible = true;
               });
             }
@@ -69,194 +72,209 @@ class ProfileHeaderState extends State<ProfileHeader> {
               ),
             ),
             duration: Duration(microseconds: 5),
-            child: Column(
-              children: <Widget>[
-                Container(
-                  height: 110,
-                  width: 110,
-                  margin: EdgeInsets.only(bottom: 20),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(100),
-                    image: DecorationImage(
-                        image: AssetImage('assets/images/CROPPED-IMG_2159.JPG'),
-                        fit: BoxFit.cover),
+            child: SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    height: 110,
+                    width: 110,
+                    margin: EdgeInsets.only(bottom: 20),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(100),
+                      image: DecorationImage(
+                          image:
+                              AssetImage('assets/images/CROPPED-IMG_2159.JPG'),
+                          fit: BoxFit.cover),
+                    ),
                   ),
-                ),
-                Text(
-                  userData['firstName'] + '  ' + userData['lastName'],
-                  style: TextStyle(
-                    color: Colors.white,
+                  Text(
+                    userData['firstName'] + '  ' + userData['lastName'],
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
                   ),
-                ),
-                Text(
-                  userData['country'] + ',  ' + userData['city'],
-                  style: TextStyle(
-                    color: Colors.white,
+                  Text(
+                    userData['country'] + ',  ' + userData['city'],
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
                   ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 32),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Column(
-                        children: <Widget>[
-                          Text(
-                            customerRating + ' :',
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Column(
-                        children: <Widget>[
-                          Text(
-                            transporterRating + ' :',
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
+                  SizedBox(
+                    height: 10,
                   ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 32),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Column(
-                        children: <Widget>[
-                          Text(
-                            userData['ordererLevelName'],
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Column(
-                        children: <Widget>[
-                          Text(
-                            userData['transporterLevelName'],
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                Visibility(
-                  visible: _isVisible,
-                  child: Column(
-                    children: <Widget>[
-                      Container(
-                        margin: EdgeInsets.symmetric(horizontal: 32),
-                        padding: EdgeInsets.only(top: 15),
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.phone,
-                              color: Colors.yellow,
-                              size: 20.0,
-                            ),
-                            Text(' '),
-                            Container(
-                              margin: const EdgeInsets.all(15.0),
-                              padding: const EdgeInsets.all(3.0),
-                              decoration: BoxDecoration(
-                                border: Border(
-                                  bottom: BorderSide(
-                                    width: 1.0,
-                                    color: Colors.grey,
-                                  ),
-                                ),
-                              ),
-                              child: Text(
-                                userData['phoneNumber'],
-                                style: TextStyle(color: Colors.white),
+                  Container(
+                    margin: EdgeInsets.symmetric(horizontal: 32),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Column(
+                          children: <Widget>[
+                            Text(
+                              customerRating + ' :',
+                              style: TextStyle(
+                                color: Colors.white,
                               ),
                             ),
                           ],
                         ),
-                      ),
-                      // Container(
-                      //   margin:
-                      //       EdgeInsets.symmetric(vertical: 32, horizontal: 32),
-                      //   padding: EdgeInsets.only(top: 15),
-                      //   child: Row(
-                      //     children: [
-                      //       Icon(
-                      //         Icons.mail,
-                      //         color: Colors.yellow,
-                      //         size: 20.0,
-                      //       ),
-                      //       Text(' '),
-                      //       Container(
-                      //         margin: const EdgeInsets.all(15.0),
-                      //         padding: const EdgeInsets.all(3.0),
-                      //         decoration: BoxDecoration(
-                      //           border: Border(
-                      //             bottom: BorderSide(
-                      //               width: 1.0,
-                      //               color: Colors.grey,
-                      //             ),
-                      //           ),
-                      //         ),
-                      //         child: Text(
-                      //           userData['email'],
-                      //           style: TextStyle(color: Colors.white),
-                      //         ),
-                      //       ),
-                      //     ],
-                      //   ),
-                      // ),
-                      // Container(
-                      //   margin:
-                      //       EdgeInsets.symmetric(vertical: 62, horizontal: 32),
-                      //   padding: EdgeInsets.only(top: 15),
-                      //   child: Row(
-                      //     children: [
-                      //       Text(
-                      //         dateOfBirth + ':',
-                      //         style: TextStyle(
-                      //           color: Colors.yellow,
-                      //         ),
-                      //       ),
-                      //       Text(' '),
-                      //       Container(
-                      //         margin: const EdgeInsets.all(15.0),
-                      //         padding: const EdgeInsets.all(3.0),
-                      //         decoration: BoxDecoration(
-                      //           border: Border(
-                      //             bottom: BorderSide(
-                      //               width: 1.0,
-                      //               color: Colors.grey,
-                      //             ),
-                      //           ),
-                      //         ),
-                      //         child: Text(
-                      //           userData['birthDate'],
-                      //           style: TextStyle(color: Colors.white),
-                      //         ),
-                      //       ),
-                      //     ],
-                      //   ),
-                      // ),
-                    ],
+                        Column(
+                          children: <Widget>[
+                            Text(
+                              transporterRating + ' :',
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    margin: EdgeInsets.symmetric(horizontal: 32),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Column(
+                          children: <Widget>[
+                            Text(
+                              userData['ordererLevelName'],
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Column(
+                          children: <Widget>[
+                            Text(
+                              userData['transporterLevelName'],
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  Visibility(
+                    visible: _isVisible,
+                    child: Container(
+                      margin: EdgeInsets.only(top: 25.0, left: 25.0),
+                      child: Column(
+                        children: <Widget>[
+                          Container(
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.phone,
+                                  color: Colors.yellow,
+                                  size: 20.0,
+                                ),
+                                Text(' '),
+                                Container(
+                                  decoration: BoxDecoration(
+                                    border: Border(
+                                      bottom: BorderSide(
+                                        width: 1.0,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                  ),
+                                  child: Text(
+                                    userData['phoneNumber'],
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(top: 7.0),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.mail,
+                                  color: Colors.yellow,
+                                  size: 20.0,
+                                ),
+                                Text(' '),
+                                Container(
+                                  decoration: BoxDecoration(
+                                    border: Border(
+                                      bottom: BorderSide(
+                                        width: 1.0,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                  ),
+                                  child: Text(
+                                    userData['email'],
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(top: 7.0),
+                            child: Row(
+                              children: [
+                                Text(
+                                  dateOfBirth + ':',
+                                  style: TextStyle(
+                                    color: Colors.yellow,
+                                  ),
+                                ),
+                                Text(' '),
+                                Container(
+                                  decoration: BoxDecoration(
+                                    border: Border(
+                                      bottom: BorderSide(
+                                        width: 1.0,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                  ),
+                                  child: Text(
+                                    userData['birthDate'],
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(top: 10.0, right: 15.0),
+                            alignment: Alignment.bottomRight,
+                            child: FlatButton(
+                              child: SizedBox(
+                                child: Text(
+                                  logout,
+                                  style: TextStyle(
+                                    color: Colors.yellow,
+                                  ),
+                                ),
+                              ),
+                              onPressed: () {
+                                Navigator.of(context).pushAndRemoveUntil(
+                                    MaterialPageRoute(
+                                        builder: (BuildContext context) =>
+                                            Login()),
+                                    (Route<dynamic> route) => false);
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -273,6 +291,7 @@ class ProfileHeaderState extends State<ProfileHeader> {
       customerRating = prefs.getString('customer_rating') ?? '';
       transporterRating = prefs.getString('transporter_rating') ?? '';
       dateOfBirth = prefs.getString('birthday') ?? '';
+      logout = prefs.getString('logout') ?? '';
     });
   }
 }
