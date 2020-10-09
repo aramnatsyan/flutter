@@ -42,11 +42,8 @@ class UserProfileState extends State<UserProfile> {
     return new Scaffold(
       body: Stack(
         children: <Widget>[
-          // ProfileHeader(
-          //   userData: userData,
-          // ),
           Container(
-            margin: const EdgeInsets.only(left: 10.0, right: 10.0, top: 275.0),
+            margin: const EdgeInsets.only(left: 10.0, right: 10.0, top: 295.0),
             padding: EdgeInsets.only(top: 10),
             decoration: BoxDecoration(
               border: Border(
@@ -70,7 +67,30 @@ class UserProfileState extends State<UserProfile> {
             ),
           ),
           Container(
-            margin: const EdgeInsets.only(left: 10.0, right: 10.0, top: 315),
+            margin: const EdgeInsets.only(left: 10.0, right: 10.0, top: 355.0),
+            decoration: BoxDecoration(
+              border: Border(
+                bottom: BorderSide(
+                  color: Colors.grey,
+                  width: 1.0,
+                ),
+              ),
+            ),
+            child: FlatButton(
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width,
+                child: Text(
+                  settings,
+                  style: TextStyle(fontSize: 18.0, height: 3.0),
+                ),
+              ),
+              onPressed: () {
+                print(settings);
+              },
+            ),
+          ),
+          Container(
+            margin: const EdgeInsets.only(left: 10.0, right: 10.0, top: 395),
             padding: EdgeInsets.only(top: 10),
             decoration: BoxDecoration(
               border: Border(
@@ -94,30 +114,7 @@ class UserProfileState extends State<UserProfile> {
             ),
           ),
           Container(
-            margin: const EdgeInsets.only(left: 10.0, right: 10.0, top: 365.0),
-            decoration: BoxDecoration(
-              border: Border(
-                bottom: BorderSide(
-                  color: Colors.grey,
-                  width: 1.0,
-                ),
-              ),
-            ),
-            child: FlatButton(
-              child: SizedBox(
-                width: MediaQuery.of(context).size.width,
-                child: Text(
-                  settings,
-                  style: TextStyle(fontSize: 18.0, height: 3.0),
-                ),
-              ),
-              onPressed: () {
-                print(settings);
-              },
-            ),
-          ),
-          Container(
-            margin: const EdgeInsets.only(left: 10.0, right: 10.0, top: 45),
+            margin: const EdgeInsets.only(left: 10.0, right: 10.0, top: 455),
             decoration: BoxDecoration(
               border: Border(
                 bottom: BorderSide(
@@ -140,7 +137,7 @@ class UserProfileState extends State<UserProfile> {
             ),
           ),
           Container(
-            margin: const EdgeInsets.only(left: 10.0, right: 10.0, top: 515),
+            margin: const EdgeInsets.only(left: 10.0, right: 10.0, top: 505),
             decoration: BoxDecoration(
               border: Border(
                 bottom: BorderSide(
@@ -163,7 +160,7 @@ class UserProfileState extends State<UserProfile> {
             ),
           ),
           Container(
-            margin: const EdgeInsets.only(left: 10.0, right: 10.0, top: 565),
+            margin: const EdgeInsets.only(left: 10.0, right: 10.0, top: 555),
             decoration: BoxDecoration(
               border: Border(
                 bottom: BorderSide(
@@ -186,7 +183,7 @@ class UserProfileState extends State<UserProfile> {
             ),
           ),
           Container(
-            margin: const EdgeInsets.only(left: 10.0, right: 10.0, top: 615),
+            margin: const EdgeInsets.only(left: 10.0, right: 10.0, top: 605),
             decoration: BoxDecoration(
               border: Border(
                 bottom: BorderSide(
