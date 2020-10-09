@@ -24,6 +24,7 @@ class ProfileHeaderState extends State<ProfileHeader> {
   String transporterRating = '';
   String dateOfBirth = '';
   String logout = '';
+  var _dropDownIcon = Icons.arrow_drop_down;
   /*
   get profile header resources from store for simple data.
   */
@@ -45,12 +46,14 @@ class ProfileHeaderState extends State<ProfileHeader> {
               setState(() {
                 _heights = 294;
                 _isVisible = false;
+                _dropDownIcon = Icons.arrow_drop_down;
               });
             } else {
               _isHeaderOppened = true;
               setState(() {
                 _heights = 440;
                 _isVisible = true;
+                _dropDownIcon = Icons.arrow_drop_up;
               });
             }
           },
@@ -249,7 +252,7 @@ class ProfileHeaderState extends State<ProfileHeader> {
                             ),
                           ),
                           Container(
-                            margin: EdgeInsets.only(top: 10.0, right: 15.0),
+                            // margin: EdgeInsets.only(top: 10.0, right: 15.0),
                             alignment: Alignment.bottomRight,
                             child: FlatButton(
                               child: SizedBox(
@@ -271,6 +274,13 @@ class ProfileHeaderState extends State<ProfileHeader> {
                           ),
                         ],
                       ),
+                    ),
+                  ),
+                  Container(
+                    child: Icon(
+                      _dropDownIcon,
+                      color: Colors.grey,
+                      size: 32.0,
                     ),
                   ),
                 ],
