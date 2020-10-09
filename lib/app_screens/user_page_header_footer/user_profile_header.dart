@@ -288,6 +288,18 @@ class ProfileHeaderState extends State<ProfileHeader> {
             ),
           ),
         ),
+        // edit button with click
+        Positioned(
+          top: 60,
+          right: 20,
+          child: Container(
+            child: Icon(
+              Icons.edit,
+              color: Colors.white,
+              size: 25.0,
+            ),
+          ),
+        ),
       ],
     );
   }
